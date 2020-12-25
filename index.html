@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Task App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Vue Task App</h1>
+    </header>
+
+    <main id="container">
+
+        <div v-if="!formVisible" id="taskList">
+
+            <div class="task" v-for="task in tasks" :class="task.prio, task.status">
+                <div class="controls">
+                    <i v-if="getIndex(task) < tasks.length-1" class="control fas fa-arrow-down"
+                        @click="moveTaskDown(task)" title="Move your task down"></i>
+                    <i v-if="getIndex(task) > 0" class="control fas fa-arrow-up" @click="moveTaskUp(task)"
+                        title="Move your task up"></i>
+                    <i class="control fas fa-edit" @click="showForm(task)" title="Edit your task"></i>
+                </div>
+                <h3 class="taskTitle">{{task.title}}</h3>
+                <div class="taskDescription">
+                    {{task.description}}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="centered">
+            <button v-if="!formVisible" @click="showForm();">Add New Task</button>
+        </div>
+
+        <section id="taskForm" v-if="formVisible">
+
+            <h2 class="centered" v-if="creatingTask">Create a new Task</h2>
+            <h2 class="centered" v-if="editingTask">Edit your Task</h2>
+
+            <label for="titleInput">Title</label>
+            <input id="titleInput" placeholder="Choose a short title" class="taskName" type="text" v-model="titleInput">
+
+            <label for="descInput">Description</label>
+            <textarea id="descInput" placeholder="Write a detailed description" v-model="descInput"></textarea>
+
+            <label for="prioInput">Priority</label>
+            <select id="prioInput" v-model="prioInput">
+                <option value="highPrio">
+                    High
+                </option>
+                <option value="mediumPrio">
+                    Medium
+                </option>
+                <option value="lowPrio">
+                    Low
+                </option>
+            </select>
+
+            <label for="statusInput">Status</label>
+            <select id="statusInput" v-model="statusInput">
+                <option value="finished">Finished</option>
+                <option value="open">Open</option>
+            </select>
+
+            <button v-if="creatingTask" @click="createTask">Create Task</button>
+            <button v-if="editingTask" @click="updateTask">Update Task</button>
+            <button v-if="editingTask" class="danger" @click="deleteTask">{{deleteText}}</button>
+            <button @click="hideForm" id="cancelButton">Cancel</button>
+
+        </section>
+
+        <section v-show="error" id="errorMessage">{{error}}</section>
+
+    </main>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
