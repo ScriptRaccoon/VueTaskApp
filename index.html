@@ -20,17 +20,22 @@
         <div v-if="!formVisible" id="taskList">
 
             <div class="task" v-for="task in tasks" :class="task.prio, task.status">
-                <div class="controls">
-                    <i v-if="getIndex(task) < tasks.length-1" class="control fas fa-arrow-down"
-                        @click="moveTaskDown(task)" title="Move your task down"></i>
+                
+                <span class="arrows">
                     <i v-if="getIndex(task) > 0" class="control fas fa-arrow-up" @click="moveTaskUp(task)"
                         title="Move your task up"></i>
-                    <i class="control fas fa-edit" @click="showForm(task)" title="Edit your task"></i>
-                </div>
-                <h3 class="taskTitle">{{task.title}}</h3>
-                <div class="taskDescription">
-                    {{task.description}}
-                </div>
+                    <i v-if="getIndex(task) < tasks.length-1" class="control fas fa-arrow-down"
+                    @click="moveTaskDown(task)" title="Move your task down"></i>
+                </span>
+
+                <i class="control fas fa-edit" @click="showForm(task)" title="Edit your task"></i>
+                <div class="taskContent" @click="showForm(task)">
+                    <h3 class="taskTitle">{{task.title}}</h3>
+                    <div class="taskDescription">
+                        {{task.description}}
+                    </div>   
+                </div>           
+                            
             </div>
 
         </div>
