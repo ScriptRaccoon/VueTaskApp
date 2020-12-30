@@ -30,7 +30,7 @@ const app = Vue.createApp({
             ],
             titleInput: "",
             descInput: "",
-            prioInput: "medium",
+            prioInput: "mediumPrio",
             statusInput: "open",
         };
     },
@@ -47,7 +47,6 @@ const app = Vue.createApp({
                 this.prioInput = task.prio;
                 this.statusInput = task.status;
                 this.currentTaskIndex = this.getIndex(task);
-                this.deleteStep = 0;
                 this.deleteText = "Delete Task";
             } else {
                 this.creatingTask = true;
